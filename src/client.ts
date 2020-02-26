@@ -118,26 +118,26 @@ export class Client {
 
     return this.filterField(
       [
+        author
+          ? {
+              title: 'author',
+              value: `${author.name}`,
+              short: true,
+            }
+          : undefined,
         this.repo,
+        this.ref,
         commit
           ? {
-              title: 'message',
+              title: 'commit message',
               value: commit.data.commit.message,
               short: true,
             }
           : undefined,
         this.commit,
-        author
-          ? {
-              title: 'author',
-              value: `${author.name}<${author.email}>`,
-              short: true,
-            }
-          : undefined,
+        this.workflow,
         this.action,
         this.eventName,
-        this.ref,
-        this.workflow,
       ],
       undefined,
     );
@@ -149,7 +149,7 @@ export class Client {
 
     return {
       title: 'commit',
-      value: `<https://github.com/${owner}/${repo}/commit/${sha}|${sha}>`,
+      value: `<https://github.com/${owner}/${repo}/commit/${sha}|view commit>`,
       short: true,
     };
   }
@@ -159,32 +159,37 @@ export class Client {
 
     return {
       title: 'repo',
-      value: `<https://github.com/${owner}/${repo}|${owner}/${repo}>`,
+      value: `<https://github.com/${owner}/${repo}|${repo}>`,
       short: true,
     };
   }
 
   private get action(): Field {
     const { sha } = github.context;
+    const run_id = process.env.GITHUB_RUN_ID;
     const { owner, repo } = github.context.repo;
 
     return {
       title: 'action',
-      value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks|action>`,
+      value: `<https://github.com/${owner}/${repo}/actions/runs/${run_id}|view action output>`,
       short: true,
     };
   }
 
   private get eventName(): Field {
     return {
-      title: 'eventName',
+      title: 'event',
       value: github.context.eventName,
       short: true,
     };
   }
 
   private get ref(): Field {
-    return { title: 'ref', value: github.context.ref, short: true };
+    var branchName = github.context.ref;
+    if (branchName.indexOf('refs/heads/') > -1) {
+      branchName = branchName.slice('refs/heads/'.length);
+    }
+    return { title: 'branch', value: branchName, short: true };
   }
 
   private get workflow(): Field {
