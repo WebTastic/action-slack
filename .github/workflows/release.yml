@@ -18,7 +18,7 @@ jobs:
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
-      - uses: 8398a7/action-slack@v2
+      - uses: WebTastic/action-slack@v3
         with:
           status: ${{ job.status }}
         env:
