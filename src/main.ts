@@ -26,6 +26,12 @@ async function run(): Promise<void> {
     core.debug(`channel: ${channel}`);
     core.debug(`rawPayload: ${rawPayload}`);
 
+    const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+    if (!webhookUrl) {
+      throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
+    }
+    const token = process.env.GITHUB_TOKEN || undefined;
+
     const client = new Client(
       {
         status,
@@ -37,8 +43,8 @@ async function run(): Promise<void> {
         icon_url,
         channel,
       },
-      process.env.GITHUB_TOKEN,
-      process.env.SLACK_WEBHOOK_URL,
+      token,
+      webhookUrl,
     );
 
     switch (status) {

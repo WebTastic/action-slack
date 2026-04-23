@@ -305,6 +305,11 @@ function run() {
             core.debug(`icon_url: ${icon_url}`);
             core.debug(`channel: ${channel}`);
             core.debug(`rawPayload: ${rawPayload}`);
+            const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+            if (!webhookUrl) {
+                throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
+            }
+            const token = process.env.GITHUB_TOKEN || undefined;
             const client = new client_1.Client({
                 status,
                 mention,
@@ -314,7 +319,7 @@ function run() {
                 icon_emoji,
                 icon_url,
                 channel,
-            }, process.env.GITHUB_TOKEN, process.env.SLACK_WEBHOOK_URL);
+            }, token, webhookUrl);
             switch (status) {
                 case client_1.Success:
                     yield client.send(yield client.success(text));
