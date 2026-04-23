@@ -19,20 +19,20 @@ const fixedFields = () => {
     {
       short: true,
       title: 'repo',
-      value: '<https://github.com/8398a7/action-slack|action-slack>',
+      value: '<https://github.com/WebTastic/action-slack|action-slack>',
     },
     { short: true, title: 'branch', value: 'feature/19' },
     {
       short: true,
       title: 'commit',
       value:
-        '<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|view commit>',
+        '<https://github.com/WebTastic/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|view commit>',
     },
     { short: true, title: 'workflow', value: process.env.GITHUB_WORKFLOW },
     {
       short: true,
       title: 'action',
-      value: `<https://github.com/8398a7/action-slack/actions/runs/${process.env.GITHUB_RUN_ID}|view action output>`,
+      value: `<https://github.com/WebTastic/action-slack/actions/runs/${process.env.GITHUB_RUN_ID}|view action output>`,
     },
     { short: true, title: 'event', value: process.env.GITHUB_EVENT_NAME },
   ];
@@ -59,9 +59,9 @@ const successMsg = ':white_check_mark: Succeeded GitHub Actions';
 const cancelMsg = ':warning: Canceled GitHub Actions';
 const failMsg = ':no_entry: Failed GitHub Actions';
 
-describe('8398a7/action-slack', () => {
+describe('WebTastic/action-slack', () => {
   beforeEach(() => {
-    process.env.GITHUB_REPOSITORY = '8398a7/action-slack';
+    process.env.GITHUB_REPOSITORY = 'WebTastic/action-slack';
   });
 
   it('has no mention', async () => {
