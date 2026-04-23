@@ -165,7 +165,6 @@ export class Client {
   }
 
   private get action(): Field {
-    const { sha } = github.context;
     const run_id = process.env.GITHUB_RUN_ID;
     const { owner, repo } = github.context.repo;
 
@@ -185,8 +184,8 @@ export class Client {
   }
 
   private get ref(): Field {
-    var branchName = github.context.ref;
-    if (branchName.indexOf('refs/heads/') > -1) {
+    let branchName = github.context.ref;
+    if (branchName.includes('refs/heads/')) {
       branchName = branchName.slice('refs/heads/'.length);
     }
     return { title: 'branch', value: branchName, short: true };

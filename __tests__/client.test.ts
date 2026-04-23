@@ -2,6 +2,7 @@ process.env.GITHUB_WORKFLOW = 'PR Checks';
 process.env.GITHUB_SHA = 'b24f03a32e093fe8d55e23cfd0bb314069633b2f';
 process.env.GITHUB_REF = 'refs/heads/feature/19';
 process.env.GITHUB_EVENT_NAME = 'push';
+process.env.GITHUB_RUN_ID = '1';
 
 import {
   Client,
@@ -17,29 +18,22 @@ const fixedFields = () => {
     {
       short: true,
       title: 'repo',
-      value: '<https://github.com/8398a7/action-slack|8398a7/action-slack>',
+      value: '<https://github.com/8398a7/action-slack|action-slack>',
     },
-    {
-      short: true,
-      title: 'message',
-      value: '[#19] support for multiple user mentions',
-    },
+    { short: true, title: 'branch', value: 'feature/19' },
     {
       short: true,
       title: 'commit',
       value:
-        '<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|b24f03a32e093fe8d55e23cfd0bb314069633b2f>',
+        '<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|view commit>',
     },
-    { short: true, title: 'author', value: '839<8398a7@gmail.com>' },
+    { short: true, title: 'workflow', value: process.env.GITHUB_WORKFLOW },
     {
       short: true,
       title: 'action',
-      value:
-        '<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f/checks|action>',
+      value: `<https://github.com/8398a7/action-slack/actions/runs/${process.env.GITHUB_RUN_ID}|view action output>`,
     },
-    { short: true, title: 'eventName', value: process.env.GITHUB_EVENT_NAME },
-    { short: true, title: 'ref', value: process.env.GITHUB_REF },
-    { short: true, title: 'workflow', value: process.env.GITHUB_WORKFLOW },
+    { short: true, title: 'event', value: process.env.GITHUB_EVENT_NAME },
   ];
 };
 
@@ -344,9 +338,6 @@ describe('8398a7/action-slack', () => {
     const client = new Client(withParams, undefined, '');
     const payload = getTemplate(`${successMsg}\n`);
     payload.attachments[0].color = 'good';
-    payload.attachments[0].fields = payload.attachments[0].fields.filter(
-      (field: any) => !['message', 'author'].includes(field.title),
-    );
     expect(await client.success('')).toStrictEqual(payload);
   });
 });

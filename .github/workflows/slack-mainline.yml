@@ -2,6 +2,7 @@ name: Slack Mainline
 on:
   push:
     branches:
+      - main
       - master
       - v2
 
