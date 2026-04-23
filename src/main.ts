@@ -52,7 +52,7 @@ async function run(): Promise<void> {
         await client.send(await client.cancel(text));
         break;
       case Custom:
-        /* eslint-disable no-var */
+        /* eslint-disable no-var, @typescript-eslint/no-unsafe-assignment */
         var payload: IncomingWebhookSendArguments = eval(
           `payload = ${rawPayload}`,
         );
@@ -69,4 +69,4 @@ async function run(): Promise<void> {
   }
 }
 
-run();
+void run();

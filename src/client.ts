@@ -224,7 +224,7 @@ export class Client {
     diff: U,
   ) {
     return array.filter(item => item !== diff) as Exclude<
-      T extends { [K in keyof T]: infer U } ? U : never,
+      T extends { [K in keyof T]: infer V } ? V : never,
       U
     >[];
   }
