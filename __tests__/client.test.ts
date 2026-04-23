@@ -3,6 +3,7 @@ process.env.GITHUB_SHA = 'b24f03a32e093fe8d55e23cfd0bb314069633b2f';
 process.env.GITHUB_REF = 'refs/heads/feature/19';
 process.env.GITHUB_EVENT_NAME = 'push';
 process.env.GITHUB_RUN_ID = '1';
+delete process.env.GITHUB_TOKEN;
 
 import {
   Client,
